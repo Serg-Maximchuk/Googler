@@ -15,20 +15,20 @@ import serg.task.tools.ConsoleSpeaking;
 public class PageWalker implements ConsoleSpeaking {
 	
 	@Override
-	public void say(String command){
+	public void say( String command ) {
 		
 		//limiting the message
-		command = (command.length() > LIMIT) ? 
-				command.substring(0, LIMIT)+"..." : command;
+		command = ( command.length() > LIMIT ) ? 
+				command.substring( 0, LIMIT ) + "..." : command;
 		
-		System.out.println(command);
+		System.out.println( command );
 	}
 	
 	private MyFirefoxDriver driver;
 	
 	private int numberOfLinks;
 	
-	public void setNumberOfLinks(int numberOfLinks) {
+	public void setNumberOfLinks( int numberOfLinks ) {
 		this.numberOfLinks = numberOfLinks;
 	}
 	
@@ -37,7 +37,7 @@ public class PageWalker implements ConsoleSpeaking {
 	 * 
 	 * @param driver - {@linkplain MyFirefoxDriver}
 	 */
-	public PageWalker(MyFirefoxDriver driver) {
+	public PageWalker( MyFirefoxDriver driver ) {
 		this.driver = driver;
 	}
 	
@@ -46,17 +46,16 @@ public class PageWalker implements ConsoleSpeaking {
 	 */
 	public void goThroughPage() {
 		
-		setNumberOfLinks(driver.getNumberOfLinks());
+		setNumberOfLinks( driver.getNumberOfLinks() );
 		
-		if (numberOfLinks == 0) 	//smth wrong? get this message and quit FF
-			say("Somethin wrong. There are no links.");
+		if ( numberOfLinks == 0 ) 	//smth wrong? get this message and quit FF
+				say( "Somethin wrong. There are no links." );
 		
 		//cycle that opens all links and prints it's names
-		else {
-			doTheMainTask();
-			if ( driver.isNextPageExists() ) {
-				askNextPage();
-	}	}	}
+		else {	doTheMainTask();
+					if ( driver.isNextPageExists() ) 
+							askNextPage();
+	}	}
 	
 	/**
 	 * Clicks to link, get name, go back, repeat...
@@ -64,25 +63,25 @@ public class PageWalker implements ConsoleSpeaking {
 	public void doTheMainTask() {
 		
 		int i = 1;
-		while	(i <= numberOfLinks)	{
+		while	( i <= numberOfLinks )	{
 			try	{	
 				//find link by number, clicking it
-				driver.findLinkByNumber(i).click();
+				driver.findLinkByNumber( i ).click();
 				MyFirefoxDriver.pause();
 				
+				
 				//number + page's title
-				say(i+". "+driver.getTitle());
-				MyFirefoxDriver.pause();
+				say( i + ". " + driver.getTitle() );
 				
 				//go back
 				driver.navigate().back();
 				MyFirefoxDriver.pause();
 				i++;
 			
-			}	catch (NoSuchElementException e)	{
-					say("Page do not loads fully. Seems that your internet or PC is slow.");
-					say("Try to increase time constant serg.task.tools.Constants.MSECONDS");
-					say("Retrying task...");
+			}	catch ( NoSuchElementException e )	{
+					say( "Page do not loads fully. Seems that your internet or PC is slow." 
+							+ "\nTry to increase time constant serg.task.tools.Constants.MSECONDS"
+							+ "\nRetrying task..." );
 					MyFirefoxDriver.pause();
 	}	}	}
 	
@@ -91,12 +90,12 @@ public class PageWalker implements ConsoleSpeaking {
 	 * Takes "Y/N" answer.
 	 */
 	public void askNextPage() {
-		say("Go to the next page? Y/N");
+		say( "Go to the next page? Y/N" );
 		
-		Scanner input = new Scanner(System.in);
+		Scanner input = new Scanner( System.in );
 		String answer = input.nextLine();
 		
-		if ( answer.equalsIgnoreCase("y") ) {
+		if ( answer.equalsIgnoreCase( "y" ) ) {
 			
 			driver.findNextPage().click();		//go to next page
 			MyFirefoxDriver.pause();			

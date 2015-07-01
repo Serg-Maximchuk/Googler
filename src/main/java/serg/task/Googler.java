@@ -14,13 +14,13 @@ import serg.task.tools.ConsoleSpeaking;
 public class Googler implements ConsoleSpeaking {
 	
 	@Override
-	public void say(String command){
+	public void say( String command ) {
 		
 		//limiting the message
-		command = (command.length() > LIMIT) ? 
-				command.substring(0, LIMIT)+"..." : command;
+		command = ( command.length() > LIMIT ) ? 
+				command.substring( 0, LIMIT ) + "..." : command;
 		
-		System.out.println(command);
+		System.out.println( command );
 	}
 	
 	/**
@@ -30,7 +30,7 @@ public class Googler implements ConsoleSpeaking {
 	
 	private static Scanner input;
 	
-	public void setGoogleThis(String googleThis) {
+	public void setGoogleThis( String googleThis ) {
 		this.googleThis = googleThis;
 	}
 	
@@ -41,28 +41,27 @@ public class Googler implements ConsoleSpeaking {
 	/**
 	 * Constructor with greetings.
 	 */
-	public Googler(){
-		say("Hi there! Googler welcomes you!\nWhat you want to google?");
+	public Googler() {
+		say( "Hi there! Googler welcomes you!\nWhat you want to google?" );
 	}
 	
 	public String getStringFromConsole() {
 		
 		String word = "";
 		
-		input = new Scanner(System.in);
+		input = new Scanner( System.in );
 		word = input.nextLine();
 		
 		//if input is empty or whitespace
-		if (word.equals("")||word.equals(" ")) {
+		if ( word.equals("") || word.equals(" ") ) {
 			
-			say("Just type somethig.");
+			say( "Just type somethig." );
 			word = getStringFromConsole();
 		}
-		
 		return word;
 	}
 	
-	public static void main(String[] args) {
+	public static void main( String[] args ) {
 		
 		//say hello
 		Googler googler = new Googler();
@@ -71,19 +70,20 @@ public class Googler implements ConsoleSpeaking {
 		String str = googler.getStringFromConsole();
 		
 		//set what to google
-		googler.setGoogleThis(str);
-		googler.say("Opening Mozilla Firefox...");
+		googler.setGoogleThis( str );
+		googler.say( "Opening Mozilla Firefox..." );
 		
 		//create Firefox WebDriver, opening the FF with new profile
 		MyFirefoxDriver driver = new MyFirefoxDriver();
 		
 		//google what needs
-		driver.google(googler.getGoogleThis());
+		driver.google( googler.getGoogleThis() );
 		
-		PageWalker Walker = new PageWalker(driver);
+		PageWalker Walker = new PageWalker( driver );
 		//go through the page, print result names to console
 		Walker.goThroughPage();
 		//work done
+		googler.say( "Shutting down Mozilla Firefox." );
 		driver.close();
 		input.close();
 	}	

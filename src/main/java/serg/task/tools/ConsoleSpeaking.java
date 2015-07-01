@@ -17,6 +17,5 @@ public interface ConsoleSpeaking {
 	 * 
 	 * @param command - The {@code String} to be printed
 	 */
-	public void say(String command);
-
+	public void say( String command );
 }

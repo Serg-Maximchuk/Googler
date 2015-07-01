@@ -1,19 +1,26 @@
 package serg.task.driver;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
-import serg.task.tools.Constants;
+import serg.task.tools.Const;
 
 /**
  * Class MyFirefoxDriver. Extends {@linkplain FirefoxDriver} class.
- * Implements {@linkplain Constants} interface.
- * Contains some convenient methods.
+ * Contains some convenient methods for finding Google result page elements.
+ * Contains {@code google} method that goes to Google web site, input interested 
+ * {@code String}, then clicking "Find" button..
  * 
  * @author Serg Maximchuk
  */
-public class MyFirefoxDriver extends FirefoxDriver implements Constants {
+public class MyFirefoxDriver extends FirefoxDriver {
+	
+	/**
+	 * Pause time, equals 1 sec. It's given to see the page before do smth with it.
+	 */
+	final static int MSECONDS = 1000;
 	
 	/**
 	 * Find link by number on google result page.
@@ -21,8 +28,8 @@ public class MyFirefoxDriver extends FirefoxDriver implements Constants {
 	 * @param num - number of link
 	 * @return founded WebElement
 	 */
-	public WebElement findLinkByNumber(int num) {
-		return this.findElement(By.xpath(LINK+"["+num+"]"));
+	public WebElement findLinkByNumber( int num ) {
+		return this.findElement( By.xpath( Const.LINK+"["+num+"]" ));
 	}
 	
 	/**
@@ -31,7 +38,7 @@ public class MyFirefoxDriver extends FirefoxDriver implements Constants {
 	 * @return next page {@code WebEelement}
 	 */
 	public WebElement findNextPage() {
-		return this.findElement(By.xpath(NEXT_PAGE));
+		return this.findElement( By.xpath( Const.NEXT_PAGE.toString() ));
 	}
 	
 	/**
@@ -41,7 +48,7 @@ public class MyFirefoxDriver extends FirefoxDriver implements Constants {
 	 * @return number of links.
 	 */
 	public int getNumberOfLinks() {
-		return this.findElements(By.xpath(LINK)).size();
+		return this.findElements( By.xpath( Const.LINK.toString() )).size();
 	}
 	
 	/**
@@ -50,7 +57,7 @@ public class MyFirefoxDriver extends FirefoxDriver implements Constants {
 	 * @return button {@code WebEelement}
 	 */
 	public WebElement findButton() {
-		return this.findElement(By.xpath(BUTTON));
+		return this.findElement( By.xpath( Const.BUTTON.toString() ));
 	}
 	
 	/**
@@ -59,21 +66,20 @@ public class MyFirefoxDriver extends FirefoxDriver implements Constants {
 	 * @return search field {@code WebEelement}
 	 */
 	public WebElement findSearchField() {
-		return this.findElement(By.name("q"));
+		return this.findElement( By.name( "q" ) );
 	}
 	
 	/**
 	 * Short call to pause program. It is time to get page downloads fully, 
 	 * and after some time (1 sec) resuming work.
 	 */
-	public static void pause(){
+	public static void pause() {
 		
 		try {	Thread.sleep(MSECONDS);	}
 		
-		catch (InterruptedException e) {
+		catch ( InterruptedException e ) {
 			e.printStackTrace();
-		}
-	}
+	}	}
 	
 	/**
 	 * Method that google some {@code String}.
@@ -82,14 +88,14 @@ public class MyFirefoxDriver extends FirefoxDriver implements Constants {
 	 * 
 	 * @param googleThis - {@code String} that will be googled
 	 */
-	public void google(String googleThis) {
+	public void google( String googleThis ) {
 		
 		//go to google web-site
-		this.get(GOOGLE);
+		this.get( "http://www.google.com" );
 		pause();
 		
 		//find input field and type word inside
-		this.findSearchField().sendKeys(googleThis);
+		this.findSearchField().sendKeys( googleThis );
 		
 		//find button to google smth and clicking it
 		this.findButton().click();
@@ -108,7 +114,7 @@ public class MyFirefoxDriver extends FirefoxDriver implements Constants {
 		
 		try {	this.findNextPage();	}
 		
-		catch (Exception e) {
+		catch ( NoSuchElementException e ) {
 			result = false;
 		}
 		return result;
