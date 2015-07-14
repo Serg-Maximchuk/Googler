@@ -67,10 +67,10 @@ public class Googler implements ConsoleSpeaking {
 		Googler googler = new Googler();
 		
 		//get interested word(s)
-		String str = googler.getStringFromConsole();
+		String googleThis = googler.getStringFromConsole();
 		
 		//set what to google
-		googler.setGoogleThis( str );
+		googler.setGoogleThis( googleThis );
 		googler.say( "Opening Mozilla Firefox..." );
 		
 		//create Firefox WebDriver, opening the FF with new profile

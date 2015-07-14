@@ -29,7 +29,7 @@ public class MyFirefoxDriver extends FirefoxDriver {
 	 * @return founded WebElement
 	 */
 	public WebElement findLinkByNumber( int num ) {
-		return this.findElement( By.xpath( Const.LINK+"["+num+"]" ));
+		return this.findElement( By.xpath( Const.LINK + "[" + num + "]" ));
 	}
 	
 	/**
